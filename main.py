@@ -2,12 +2,12 @@ import glob
 import os
 import pytesseract
 from chatGPT import ChatGPT
-from scene import SceneRamune
+from scene import SceneWhiteText
 from gui import GUI
 import json
 from config import PYTESSERACT_CMD, SCREENSHOT_DIRECTORY
 
-scene = SceneRamune()
+scene = SceneWhiteText()
 
 # install pytesseract
 # https://stackoverflow.com/questions/50951955/pytesseract-tesseractnotfound-error-tesseract-is-not-installed-or-its-not-i
@@ -17,10 +17,12 @@ def get_files(path):
     return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
     
 def on_ocr():
-    images = [f for f in get_files(SCREENSHOT_DIRECTORY) if f.startswith('螢幕擷取畫面')]
-    images.sort(reverse=True)
+    # latest file in SCREENSHOT_DIRECTORY
+    imagePath = max(
+        glob.glob(os.path.join(SCREENSHOT_DIRECTORY, '*')), 
+        key=os.path.getctime
+    )
     
-    imagePath = os.path.join(SCREENSHOT_DIRECTORY, images[0])
     imagePath = scene.process_image(imagePath)
     
     # to get better model:

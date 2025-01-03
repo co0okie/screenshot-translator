@@ -15,7 +15,7 @@ class Scene():
         text = text.replace('\n', '').replace(' ', '')
         return text
 
-class SceneRamune(Scene):
+class SceneWhiteText(Scene):
     @staticmethod
     def process_image(image_path: str):
         output_image_path = os.path.join(os.path.dirname(image_path), '.temp.screenshot-translator.png')
