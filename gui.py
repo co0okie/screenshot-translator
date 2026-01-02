@@ -6,6 +6,7 @@ ctypes.windll.shcore.SetProcessDpiAwareness(True)
 
 class GUI:
     def __init__(self, on_ocr, on_go):
+        self.on_ocr = on_ocr
         self.__root = tk.Tk()
         self.__root.title('screenshot translator')
         self.__root.configure(background='#222222')
@@ -81,6 +82,7 @@ class GUI:
         self.__text_result.config(state=tk.DISABLED)
         
     def start(self):
+        self.on_ocr()
         self.__root.mainloop()
         
     def set_input(self, text):

@@ -9,7 +9,7 @@ messages = [
       "content": [
         {
           "type": "text",
-          "text": "1. Repeat the given Japanese word or sentence with furigana for all kanji.\n2. Translate the input into Traditional Chinese (Taiwan). If the input is a word with multiple meanings, list all meanings separated by semicolons.\n3. For words, create three example sentences in Japanese. For sentences, explain key vocabulary or syntax in Traditional Chinese (Taiwan)."
+          "text": "translate and explain the given Japanese text into Traditional Chinese (Taiwan)"
         }
       ]
     },
@@ -61,7 +61,7 @@ response_format = {
             "properties": {
                 "furigana": {
                     "type": "string",
-                    "description": "The original Japanese word or sentence with furigana for all kanji."
+                    "description": "The original Japanese word or sentence with furigana for all kanji, but leave katakana unmodified and without any furigana."
                 },
                 "chinese": {
                     "type": "string",
@@ -69,7 +69,7 @@ response_format = {
                 },
                 "detail": {
                     "type": "array",
-                    "description": "Example sentences or explanations related to the input.",
+                    "description": "For words, create three example sentences in Japanese. For sentences, explain key vocabulary or syntax in Traditional Chinese (Taiwan).",
                     "items": {
                         "type": "string"
                     }

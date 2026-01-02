@@ -13,15 +13,16 @@ scene = SceneWhiteText()
 # https://stackoverflow.com/questions/50951955/pytesseract-tesseractnotfound-error-tesseract-is-not-installed-or-its-not-i
 pytesseract.pytesseract.tesseract_cmd = PYTESSERACT_CMD
 
-def get_files(path):
-    return [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
-    
 def on_ocr():
     # latest file in SCREENSHOT_DIRECTORY
-    imagePath = max(
-        glob.glob(os.path.join(SCREENSHOT_DIRECTORY, '*')), 
-        key=os.path.getctime
-    )
+    images = [
+        img 
+        for ext in ['jpg', 'png'] 
+        for img in glob.glob(os.path.join(SCREENSHOT_DIRECTORY, f'*.{ext}'))
+    ]
+    if not images:
+        return
+    imagePath = max(images, key=os.path.getctime)
     
     imagePath = scene.process_image(imagePath)
     
@@ -34,6 +35,8 @@ def on_ocr():
 
 def on_go():
     text = gui.get_input()
+    if text == '':
+        return
     response = ChatGPT.chat(text)
     r = json.loads(response)
     response = f'{r['furigana']}\n{r['chinese']}\n{'\n'.join(map(lambda s: f'• {s}', r['detail']))}'
